@@ -46,12 +46,12 @@ export default {
   },
   methods: {
     getInitialData() {
-      fetch('https://stream.subpar.fm/api/nowplaying')
+      fetch('https://stream.subpar.fm/api/nowplaying_static/subpar.json')
         .then((response) => {
           return response.json()
         })
         .then((data) => {
-          let station = data[0]
+          let station = data
           console.log(station)
 
           this.live = station.live.is_live
@@ -79,13 +79,16 @@ export default {
         })
     },
     subscribeToPlayer() {
-      let sub = new NchanSubscriber('https://stream.subpar.fm/api/live/nowplaying/station_id');
+      let sub = new NchanSubscriber('https://stream.subpar.fm/api/live/nowplaying/subpar');
       let nowPlaying;
       
       // TODO: Update the playing and push new entry to history
       sub.on("message", function(message, message_metadata) {
-        console.log(message)
+        
+        let station = JSON.parse(message)
+        console.log(station)
         console.log(message_metadata)
+
       });
       sub.start();
     }
