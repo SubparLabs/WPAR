@@ -22,7 +22,7 @@
       </div>
     </div>
     <div id="controls">
-      <iframe src='https://stream.subpar.fm/public/subpar/embed' frameborder='0' allowtransparency='true' style="width: 100%"></iframe>
+      <iframe src='https://stream.subpar.fm/public/subpar/embed' frameborder='0' allowtransparency='true' style="width: 98%; position: absolute; bottom: -38px; left: 1%;"></iframe>
     </div>
   </div>
 </template>
@@ -168,6 +168,5 @@ export default {
   }
 
   .controls {
-    height: 20%;
   }
 </style>
