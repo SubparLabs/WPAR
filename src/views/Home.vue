@@ -212,7 +212,9 @@ export default {
   }
 
   .footer {
-    text-align: right;
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
     padding: 25px;
     font-size: .7em;
     
