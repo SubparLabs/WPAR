@@ -15,7 +15,7 @@
         </div>
         <div class='history'>
           <span class='header'>earlier</span>
-          <p v-for='song in filteredHistory'>
+          <p v-for='song in filteredHistory' v-bind:key='song.id'>
             <a class='individual-song' :href="song.url">
               <span class="artist">{{song.artist}}</span> | <span class="title">{{song.title}}</span>
             </a>
@@ -91,12 +91,13 @@ export default {
             title: station.now_playing.song.title
           }
 
-          station.song_history.forEach(entry => {
+          station.song_history.forEach(({song}) => {
             let metaData = {
-              artist: entry.song.artist,
-              title: entry.song.title,
-              art: entry.song.art,
-              url: 'https://www.youtube.com/results?search_query=' + entry.song.artist + ' ' + entry.song.title
+              artist: song.artist,
+              title: song.title,
+              art: song.art,
+              url: 'https://www.youtube.com/results?search_query=' + song.artist + ' ' + song.title,
+              id: song.id
             }
 
             this.history.push(metaData)
@@ -104,13 +105,12 @@ export default {
         })
     },
     subscribeToPlayer() {
-      let sub = new NchanSubscriber('https://stream.subpar.fm/api/live/nowplaying/subpar');
-      let nowPlaying;
+      const sub = new NchanSubscriber('https://stream.subpar.fm/api/live/nowplaying/subpar');
       
       // TODO: Update the playing and push new entry to history
       sub.on("message", function(message, message_metadata) {
         
-        let station = JSON.parse(message)
+        const station = JSON.parse(message)
 
       });
       sub.start();
