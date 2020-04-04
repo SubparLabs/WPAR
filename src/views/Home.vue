@@ -21,18 +21,25 @@
         </div>
       </div>
     </div>
-    <audio id="player" src="https://stream.subpar.fm:8000/radio.mp3"/>
+    <div class='controls'>
+      <div class="playback-controls">
+        <span v-if='!active' @click='play'>PLAY</span>
+        <span v-else @click='stop'>STOP</span>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-let NchanSubscriber = require('nchan')
+const NchanSubscriber = require('nchan')
+const {Howl, Howler} = require('howler');
 
 export default {
   name: 'Home',
   data() {
     return {
+      active: false,
+      player: null,
       live: null,
       streamer: null,
       playing: {
@@ -49,6 +56,12 @@ export default {
     }
   },
   methods: {
+    initPlayer() {
+      this.player = new Howl({
+        src: 'https://stream.subpar.fm:8000/radio.mp3',
+        html5: true
+      }) 
+    },
     getInitialData() {
       fetch('https://stream.subpar.fm/api/nowplaying_static/subpar.json')
         .then((response) => {
@@ -90,9 +103,19 @@ export default {
 
       });
       sub.start();
-    }
+    },
+    // TODO: This is slow. Need an animation or something. Player has an `onload` event
+    play() {
+      this.player.play()
+      this.active = true
+    },
+    stop() {
+      this.player.stop()
+      this.active = false
+}
   },
   mounted() {
+    this.initPlayer() 
     this.getInitialData()
     this.subscribeToPlayer()
   }
@@ -170,5 +193,18 @@ export default {
   }
 
   .controls {
+    margin-top: 20px;
+
+    .playback-controls {
+      position: relative;
+      border: 1px solid white;
+      height: 50px;
+      width: 200px;
+      margin: 0 auto;
+      font-size: 36px;
+      font-weight: 900;
+      line-height: 50px;
+      text-align: center;
+    }
   }
 </style>
