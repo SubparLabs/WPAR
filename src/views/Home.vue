@@ -15,7 +15,7 @@
         </div>
         <div class='history'>
           <span class='header'>earlier</span>
-          <p class='individual-song' v-for='song in history' v-if='song.artist !== "(null)"'>
+          <p class='individual-song' v-for='song in filteredHistory'>
             <span class="artist">{{song.artist}}</span> | <span class="title">{{song.title}}</span>
           </p>
         </div>
@@ -41,6 +41,11 @@ export default {
       },
       history: []
 
+    }
+  },
+  computed: {
+    filteredHistory() {
+      return this.history.filter(song => song.artist !== 'subpar.fm')
     }
   },
   methods: {
