@@ -45,7 +45,7 @@ export default {
   },
   computed: {
     filteredHistory() {
-      return this.history.filter(song => song.artist !== 'subpar.fm')
+      return this.history.filter(song => gi)
     }
   },
   methods: {
@@ -128,18 +128,18 @@ export default {
       }
 
       .w-hover:hover {
-          color:#4F8EFF;
+          color:#Ffb400;
       }
 
       .p-hover:hover {
-          color: #42E9FF;
+          color: #00a6ed;
       }
 
       .a-hover:hover {
-          color: #FFBB29;
+          color: #7fb000;
       }
       .r-hover:hover {
-          color: #36FFA6;
+          color: #0d2c54;
       }
 
       .badge {
