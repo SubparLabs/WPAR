@@ -15,8 +15,8 @@
         </div>
         <div class='history'>
           <span class='header'>earlier</span>
-          <p class='individual-song' v-for='song in filteredHistory'>
-            <a :href="song.url">
+          <p v-for='song in filteredHistory'>
+            <a class='individual-song' :href="song.url">
               <span class="artist">{{song.artist}}</span> | <span class="title">{{song.title}}</span>
             </a>
           </p>
@@ -51,13 +51,18 @@ export default {
         artist: null,
         title: null
       },
-      history: []
+      history: [],
+      junkArtistValues: ['(null)', '', 'subpar.fm']
 
     }
   },
   computed: {
     filteredHistory() {
-      return this.history.filter(song => song.artist !== ('' || 'subpar.fm'))
+      return this.history.filter(song => {
+        if(this.junkArtistValues.indexOf(song.artist) < 0) {
+          return song
+        }
+      })
     }
   },
   methods: {
@@ -199,6 +204,10 @@ export default {
         .title {
 
         }
+      }
+
+      .individual-song:hover {
+        color: #0d2c54;
       }
     }
   }
