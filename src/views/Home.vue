@@ -13,7 +13,7 @@
           <span>{{numberOfListeners || 'Probably millions of'}}</span>
           <span> SubPartisan</span>
           <span v-if='numberOfListeners !== 1'>s are</span>
-          <span v-else> is</span> 
+          <span v-else> is</span>
           <span>  tuned in.</span>
         </h2>
         <div v-if="live" class='now-playing'>
