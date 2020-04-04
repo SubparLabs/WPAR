@@ -5,10 +5,17 @@
           <span class='letter w-hover'>w</span>
           <span class='letter p-hover' onclick="document.getElementById('player').play()">p</span>
           <span class='letter a-hover' onclick="document.getElementById('player').pause()">a</span>
-          <span class='letter r-hover'>r</span> 
+          <span class='letter r-hover'>r</span>
           <span v-if='live' class='badge'>live</span>   
       </div>
       <div class='metadata'>
+        <h2>
+          <span>{{numberOfListeners || 'Probably millions of'}}</span>
+          <span> SubPartisan</span>
+          <span v-if='numberOfListeners !== 1'>s are</span>
+          <span v-else> is</span> 
+          <span>  tuned in.</span>
+        </h2>
         <div v-if="live" class='now-playing'>
           <span class='header'>now</span>
           <p><span class="artist">{{playing.artist}}</span> | <span class="title">{{playing.title}}</span></p>
@@ -51,7 +58,8 @@ export default {
         artist: null,
         title: null
       },
-      history: []
+      history: [],
+      numberOfListeners: 1
 
     }
   },
@@ -85,6 +93,8 @@ export default {
             artist: station.now_playing.song.artist,
             title: station.now_playing.song.title
           }
+
+          this.numberOfListeners = station.listeners.total
 
           station.song_history.forEach(({song}) => {
             let metaData = {
@@ -129,6 +139,11 @@ export default {
 </script>
 
 <style lang="scss">
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 500;
+  }
+
   .display {
     display: flex;
     height: 80%;
@@ -180,6 +195,7 @@ export default {
     }
 
     .metadata {
+      padding: 2rem;
       flex-grow: 4;
 
       .header {
