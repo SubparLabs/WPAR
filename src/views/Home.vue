@@ -24,7 +24,8 @@
       </div>
     </div>
     <div class='controls'>
-      <div class="playback-controls">
+      <audio id="audioPlayer" src="https://stream.subpar.fm:8000/radio.mp3"></audio>
+      <div class="playback-controls disable-select">
         <span v-if='!active' @click='play'>PLAY</span>
         <span v-else @click='stop'>STOP</span>
       </div>
@@ -37,7 +38,6 @@
 
 <script>
 const NchanSubscriber = require('nchan')
-const {Howl, Howler} = require('howler');
 
 export default {
   name: 'Home',
@@ -67,10 +67,7 @@ export default {
   },
   methods: {
     initPlayer() {
-      this.player = new Howl({
-        src: 'https://stream.subpar.fm:8000/radio.mp3',
-        html5: true
-      }) 
+      this.player = document.getElementById('audioPlayer')
     },
     getInitialData() {
       fetch('https://stream.subpar.fm/api/nowplaying_static/subpar.json')
@@ -115,13 +112,12 @@ export default {
       });
       sub.start();
     },
-    // TODO: This is slow. Need an animation or something. Player has an `onload` event
     play() {
       this.player.play()
       this.active = true
     },
     stop() {
-      this.player.stop()
+      this.player.pause()
       this.active = false
 }
   },
@@ -129,11 +125,19 @@ export default {
     this.initPlayer() 
     this.getInitialData()
     this.subscribeToPlayer()
-  }
+}
 }
 </script>
 
 <style lang="scss">
+  .disable-select {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+
   .display {
     display: flex;
     height: 80%;
@@ -216,6 +220,7 @@ export default {
     margin-top: 20px;
 
     .playback-controls {
+      cursor: pointer;
       position: relative;
       border: 1px solid white;
       height: 50px;
