@@ -16,7 +16,9 @@
         <div class='history'>
           <span class='header'>earlier</span>
           <p class='individual-song' v-for='song in filteredHistory'>
-            <span class="artist">{{song.artist}}</span> | <span class="title">{{song.title}}</span>
+            <a :href="song.url">
+              <span class="artist">{{song.artist}}</span> | <span class="title">{{song.title}}</span>
+            </a>
           </p>
         </div>
       </div>
@@ -88,7 +90,8 @@ export default {
             let metaData = {
               artist: entry.song.artist,
               title: entry.song.title,
-              art: entry.song.art
+              art: entry.song.art,
+              url: 'https://www.youtube.com/results?search_query=' + entry.song.artist + ' ' + entry.song.title
             }
 
             this.history.push(metaData)
@@ -129,6 +132,11 @@ export default {
   .display {
     display: flex;
     height: 80%;
+
+    a {
+      text-decoration: none;
+      color: white;
+    }
 
     .banner {
       color: white;
