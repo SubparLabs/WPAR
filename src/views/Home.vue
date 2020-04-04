@@ -45,7 +45,7 @@ export default {
   },
   computed: {
     filteredHistory() {
-      return this.history.filter(song => gi)
+      return this.history.filter(song => song.artist !== ('' || 'subpar.fm'))
     }
   },
   methods: {
@@ -54,10 +54,7 @@ export default {
         .then((response) => {
           return response.json()
         })
-        .then((data) => {
-          let station = data
-          console.log(station)
-
+        .then((station) => {
           this.live = station.live.is_live
 
           if(this.live) {
@@ -90,8 +87,6 @@ export default {
       sub.on("message", function(message, message_metadata) {
         
         let station = JSON.parse(message)
-        console.log(station)
-        console.log(message_metadata)
 
       });
       sub.start();
