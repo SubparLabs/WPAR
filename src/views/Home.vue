@@ -27,6 +27,9 @@
         <span v-else @click='stop'>STOP</span>
       </div>
     </div>
+    <div class='footer'>
+      <span> <a href="http://subpar.biz">subpar</a> | <a href="http://twitter.com/subparr">subparr</a></span>
+    </div>
   </div>
 </template>
 
@@ -205,6 +208,21 @@ export default {
       font-weight: 900;
       line-height: 50px;
       text-align: center;
+    }
+  }
+
+  .footer {
+    text-align: right;
+    padding: 25px;
+    font-size: .7em;
+    
+    a {
+    text-decoration: none;
+    color: white;
+    }
+
+    a:hover {
+      color: #0d2c54;
     }
   }
 </style>
