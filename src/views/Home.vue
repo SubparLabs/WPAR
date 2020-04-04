@@ -3,8 +3,8 @@
     <div class='display'>
       <div class='banner'>
           <span class='letter w-hover'>w</span>
-          <span class='letter p-hover'>p</span>
-          <span class='letter a-hover'>a</span>
+          <span class='letter p-hover' onclick="document.getElementById('player').play()">p</span>
+          <span class='letter a-hover' onclick="document.getElementById('player').pause()">a</span>
           <span class='letter r-hover'>r</span> 
           <span v-if='live' class='badge'>live</span>   
       </div>
@@ -21,8 +21,7 @@
         </div>
       </div>
     </div>
-    <div id="controls">
-      <iframe src='https://stream.subpar.fm/public/subpar/embed' frameborder='0' allowtransparency='true' style="width: 98%; position: absolute; bottom: -38px; left: 1%;"></iframe>
+    <audio id="player" src="https://stream.subpar.fm:8000/radio.mp3"/>
     </div>
   </div>
 </template>
