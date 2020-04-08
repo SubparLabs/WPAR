@@ -57,7 +57,7 @@
     </div>
     <div class="footer">
       <div class= "footer-left">
-        <span>{{ numberOfListeners || "Probably millions of" }}</span>
+        <span>{{ numberOfListeners || "probably millions of" }}</span>
         <span> subpartisan</span>
         <span v-if="numberOfListeners !== 1">s are</span>
         <span v-else> is</span>
