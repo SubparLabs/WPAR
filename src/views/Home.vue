@@ -17,13 +17,6 @@
         <span v-if="live" class="badge">live</span>
       </div>
       <div class="metadata">
-        <h2>
-          <span>{{ numberOfListeners || "Probably millions of" }}</span>
-          <span> SubPartisan</span>
-          <span v-if="numberOfListeners !== 1">s are</span>
-          <span v-else> is</span>
-          <span> tuned in.</span>
-        </h2>
         <div v-if="live" class="now-playing">
           <span class="header">now</span>
           <p>
@@ -41,6 +34,16 @@
           </p>
         </div>
       </div>
+      <div class="schedule">
+        <span class="header">upcoming shows</span>
+          <p v-if="live" class="individual-show">
+            <span class="show-name">{{ streamer }}</span> – 
+            <span class="show-time">NOW</span>  
+        <p v-for="show in filteredSchedule" class="individual-show">
+          <span class="show-name">{{ show.name }}</span> – 
+          <span class="show-time">{{ show.start | moment("calendar") }}</span>
+        </p>
+      </div> 
     </div>
     <div class="controls">
       <audio
@@ -53,10 +56,18 @@
       </div>
     </div>
     <div class="footer">
-      <span>
+      <div class= "footer-left">
+        <span>{{ numberOfListeners || "Probably millions of" }}</span>
+        <span> subpartisan</span>
+        <span v-if="numberOfListeners !== 1">s are</span>
+        <span v-else> is</span>
+        <span> tuned in</span>
+      </div>
+      <div class="footer-right">
+        <span>
         <a href="http://subpar.biz">subpar</a> |
-        <a href="http://twitter.com/subparr">subparr</a></span
-      >
+        <a href="http://twitter.com/subparr">subparr</a></span>
+      </div>
     </div>
   </div>
 </template>
@@ -80,6 +91,7 @@ export default {
       },
       history: [],
       numberOfListeners: 1,
+      schedule: [],
     };
   },
   computed: {
@@ -90,6 +102,13 @@ export default {
         }
       });
     },
+    filteredSchedule() {
+      return this.schedule.filter((show) => {
+        if (this.$moment().isBefore(show.start)) {
+          return show;
+        }
+      })
+    }
   },
   methods: {
     initPlayer() {
@@ -130,6 +149,21 @@ export default {
         })
         .then(this.setStatus);
     },
+    setSchedule(schedule) {
+      this.schedule = schedule.map(show => ({
+      name: show.name,
+      start: show.start,
+      end: show.end,
+      live: show.is_now,
+      }))
+    },
+    getScheduleData() {
+      fetch("https://stream.subpar.fm/api/station/1/schedule")
+        .then((response) => {
+          return response.json();
+        })
+        .then(this.setSchedule);
+    },
     subscribeToPlayer() {
       const sub = new NchanSubscriber(
         "https://stream.subpar.fm/api/live/nowplaying/subpar",
@@ -137,8 +171,6 @@ export default {
           subscriber: "websocket",
         }
       );
-
-      // TODO: Update the playing and push new entry to history
       sub.on("message", (message, message_metadata) => {
         const station = JSON.parse(message);
         this.setStatus(station);
@@ -158,13 +190,14 @@ export default {
     this.initPlayer();
     this.getInitialData();
     this.subscribeToPlayer();
+    this.getScheduleData();
   },
 };
 </script>
 
 <style lang="scss">
 h2 {
-  font-size: 1.5rem;
+  font-size: 1rem;
   font-weight: 500;
 }
 
@@ -250,6 +283,25 @@ h2 {
       color: #0d2c54;
     }
   }
+  .schedule {
+    padding: 2rem;
+    flex-grow: 4;
+
+    .header {
+      display: block;
+      margin-top: 40px;
+      margin-bottom: 10px;
+      text-decoration: underline;
+      text-transform: uppercase;
+    }
+    .individual-show {
+    }
+    .show-name {
+    }
+    .show-time {
+    text-transform: lowercase;
+    }
+  }
 }
 
 .controls {
@@ -270,9 +322,6 @@ h2 {
 }
 
 .footer {
-  position: absolute;
-  bottom: 10px;
-  right: 10px;
   padding: 25px;
   font-size: 0.7em;
 
@@ -283,6 +332,14 @@ h2 {
 
   a:hover {
     color: #0d2c54;
+  }
+
+  .footer-right {
+  float: right;
+  }
+
+  .footer-left {
+  float: left;
   }
 }
 </style>
