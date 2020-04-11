@@ -39,7 +39,7 @@
           <p v-if="live" class="individual-show">
             <span class="show-name">{{ streamer }}</span> – 
             <span class="show-time">NOW</span>  
-        <p v-for="show in filteredSchedule" class="individual-show">
+        <p v-for="show in filteredSchedule" class="individual-show" v-bind:key="show.name">
           <span class="show-name">{{ show.name }}</span> – 
           <span class="show-time">{{ show.start | moment("calendar") }}</span>
         </p>
@@ -196,10 +196,6 @@ export default {
 </script>
 
 <style lang="scss">
-h2 {
-  font-size: 1rem;
-  font-weight: 500;
-}
 
 .disable-select {
   -webkit-touch-callout: none;
@@ -211,30 +207,39 @@ h2 {
 
 .display {
   display: flex;
-  height: 80%;
+  flex-wrap: wrap;
+
+  & > div {
+    padding: 1rem;
+  }
 
   a {
     text-decoration: none;
     color: white;
   }
 
+
   .banner {
     color: white;
     flex-grow: 1;
-    margin-right: 20px;
     text-align: center;
-
-    span {
-      display: block;
-    }
+    width: 100%;
 
     .letter {
       font-family: "Londrina Outline";
-      // font-family: 'Monoton';
-      font-size: 20vh;
+      font-size: 25vw;
       text-align: center;
       text-transform: uppercase;
     }
+
+      @media only screen and (min-width: 1000px) {
+        width: unset;
+
+        .letter {
+          display: block;
+          font-size: 20vh;
+        }
+      }
 
     .w-hover:hover {
       color: #ffb400;
@@ -252,52 +257,39 @@ h2 {
     }
 
     .badge {
-      font-size: 22px;
+      font-size: 1.375rem;
       font-weight: 900;
       text-transform: uppercase;
     }
   }
 
-  .metadata {
-    padding: 2rem;
-    flex-grow: 4;
-
     .header {
       display: block;
-      margin-top: 40px;
       margin-bottom: 10px;
       text-decoration: underline;
       text-transform: uppercase;
     }
 
+  .metadata {
+    flex-grow: 4;
+
     .individual-song {
       .artist {
         font-weight: 900;
-      }
-
-      .title {
       }
     }
 
     .individual-song:hover {
       color: #0d2c54;
     }
+
+    .now-playing {
+      margin-bottom: 20px;
+    }
   }
   .schedule {
-    padding: 2rem;
     flex-grow: 4;
 
-    .header {
-      display: block;
-      margin-top: 40px;
-      margin-bottom: 10px;
-      text-decoration: underline;
-      text-transform: uppercase;
-    }
-    .individual-show {
-    }
-    .show-name {
-    }
     .show-time {
     text-transform: lowercase;
     }
@@ -306,24 +298,32 @@ h2 {
 
 .controls {
   margin-top: 20px;
+  text-align: center;
 
   .playback-controls {
+    transition: all .2s ease-in-out;
     cursor: pointer;
     position: relative;
     border: 1px solid white;
-    height: 50px;
-    width: 200px;
+    display: inline-block;
+    padding: .5rem 1.5rem;
     margin: 0 auto;
-    font-size: 36px;
+    font-size: 2.25rem;
     font-weight: 900;
     line-height: 50px;
     text-align: center;
+    width: 148px;
+
+    &:hover {
+      background: white;
+      color: #FA6000;
+    }
   }
 }
 
 .footer {
   padding: 25px;
-  font-size: 0.7em;
+  font-size: 0.7rem;
 
   a {
     text-decoration: none;
