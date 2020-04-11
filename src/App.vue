@@ -22,6 +22,10 @@
       }
   }
 
+  body {
+    padding: 1rem;
+  }
+
   p {
     line-height: 1.25rem;
   }
