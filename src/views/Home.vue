@@ -50,9 +50,9 @@
         id="audioPlayer"
         src="https://stream.subpar.fm:8000/radio.mp3"
       ></audio>
-      <div class="playback-controls disable-select">
-        <span v-if="!active" @click="play">PLAY</span>
-        <span v-else @click="stop">STOP</span>
+      <div class="playback-controls disable-select" @click="togglePlay">
+        <span v-if="!active">PLAY</span>
+        <span v-else>STOP</span>
       </div>
     </div>
     <div class="footer">
@@ -177,14 +177,10 @@ export default {
       });
       sub.start();
     },
-    play() {
-      this.player.play();
-      this.active = true;
-    },
-    stop() {
-      this.player.pause();
-      this.active = false;
-    },
+    togglePlay() {
+      this.active = !this.active;
+      this.active ? this.player.play() : this.player.pause();
+    }
   },
   mounted() {
     this.initPlayer();
