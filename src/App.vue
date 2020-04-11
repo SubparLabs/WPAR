@@ -11,5 +11,6 @@
       background-color: #FA6000;
       color: white;
       font-family: 'Montserrat';
+      font-size: 16px;
   }
 </style>

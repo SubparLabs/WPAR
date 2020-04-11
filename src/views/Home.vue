@@ -139,7 +139,7 @@ export default {
           song.artist +
           " " +
           song.title,
-        id: song.id,
+        id: song.sh_id,
       }));
     },
     getInitialData() {
