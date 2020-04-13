@@ -9,6 +9,7 @@
   "dependencies": {
     "core-js": "^3.6.4",
     "nchan": "^1.0.10",
+    "axios": "^0.19.2",
     "vue": "^2.6.11",
     "vue-moment": "^4.1.0",
     "vue-router": "^3.1.5"
