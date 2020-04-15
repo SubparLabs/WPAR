@@ -28,8 +28,10 @@
           <span class="header">earlier</span>
           <p v-for="song in filteredHistory" v-bind:key="song.id">
             <a class="individual-song" :href="song.url">
-              <span class="artist">{{ song.artist }}</span> |
-              <span class="title">{{ song.title }}</span>
+              <span v-if="song.artist.length>25" class="artist">{{ song.artist.substring(0,25)+"..." }}</span>
+              <span v-else class="artist">{{ song.artist }}</span> |
+              <span v-if="song.title.length>30" class="title">{{ song.title.substring(0,30)+"..." }}</span>
+              <span v-else class="title">{{ song.title }}</span>
             </a>
           </p>
         </div>
@@ -41,7 +43,7 @@
             <span class="show-time">NOW</span>  
         <p v-for="show in filteredSchedule" class="individual-show" v-bind:key="show.name">
           <span class="show-name">{{ show.name }}</span> – 
-          <span class="show-time">{{ show.start | moment("calendar") }}</span>
+          <span v-if="" class="show-time">{{ show.start | moment("calendar") }}</span>
         </p>
       </div> 
     </div>
