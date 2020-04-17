@@ -12,6 +12,7 @@
       color: white;
       font-family: 'Montserrat';
       font-size: 24px;
+      height: 100%;
 
       @media only screen and (max-width: 999px) {
         font-size: 20px;
@@ -21,12 +22,16 @@
         font-size: 16px;
       }
   }
-
   body {
-    padding: 1rem;
+    height: 100%;
   }
 
   p {
     line-height: 1.25rem;
   }
+  
+  #app {
+    height: 100%;
+  }
+
 </style>

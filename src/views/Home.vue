@@ -204,6 +204,7 @@ export default {
 .display {
   display: flex;
   flex-wrap: wrap;
+  padding: 1rem;
 
   & > div {
     padding: 1rem;
