@@ -16,6 +16,7 @@
         background-image: url('/img/business.jpg');
         background-repeat: no-repeat;
         background-size: cover;
+        background-position-x: 80%;
     }
     .text {
         color: #ffb400;
