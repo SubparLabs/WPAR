@@ -9,15 +9,16 @@
 <style scoped>
     .wrapper {
         display: flex;
-        justify-content: flex-end;
+        justify-content: flex-start;
         flex-direction: row;
         height: 100%;
         width: 100%;
-        background-image: url('https://www.adweek.com/files/2015_May/iStock-Unfinished-Business-2.jpg');
+        background-image: url('/img/business.jpg');
         background-repeat: no-repeat;
         background-size: cover;
     }
     .text {
+        color: #ffb400;
         text-align: right;
         padding: 10% 5%;
         display: block;
@@ -27,9 +28,9 @@
         float: right;
     }
     .link {
+        color: #7fb000;
         margin-top: 1rem;
         font-size: 2rem;
-        color: white;
         text-decoration: none;
     }
 </style>
