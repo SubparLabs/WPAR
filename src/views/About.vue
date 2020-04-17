@@ -7,7 +7,9 @@
 	    <div class="newsletter">
 	    	<p> We probably won't ever send you an email, but here is a newsletter signup: <form action="https://tinyletter.com/subpar" method="post" target="popupwindow" onsubmit="window.open('https://tinyletter.com/subpar', 'popupwindow', 'scrollbars=yes,width=800,height=600');return true"><input type="text" style="width:140px" placeholder="your email" name="email" id="tlemail" /><input type="hidden" value="1" name="embed"/><input type="submit" value="Subscribe" /><a href="https://tinyletter.com" target="_blank"></a></form></p>
 	    	 
-    	</div></div>
+    	</div>
+      <div style='margin-top: 1rem'><router-link to='/'>go home</router-link></div>
+      </div>
   </div>
 </template>
 

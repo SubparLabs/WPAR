@@ -66,7 +66,7 @@
         <span> tuned in</span>
       </div>
       <div class="footer-right">
-        <span><a href="/about">about subpar</a></span>
+        <router-link to='/about'>about subpar</router-link>
       </div>
     </div>
   </div>
