@@ -66,9 +66,7 @@
         <span> tuned in</span>
       </div>
       <div class="footer-right">
-        <span>
-        <a href="http://subpar.biz">subpar</a> |
-        <a href="http://twitter.com/subparr">subparr</a></span>
+        <span><a href="/about">about subpar</a></span>
       </div>
     </div>
   </div>
