@@ -320,7 +320,7 @@ export default {
 .footer {
   position: sticky;
   bottom: 0;
-  padding: 25px;
+  padding: 5px 25px 25px 25px;
   font-size: 0.7rem;
   background-color: #FA6000;
 
