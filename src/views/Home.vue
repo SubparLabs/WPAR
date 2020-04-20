@@ -294,7 +294,7 @@ export default {
 }
 
 .controls {
-  left: 50%;
+  display: flex;
 
   .playback-controls {
     transition: all .2s ease-in-out;
