@@ -115,7 +115,6 @@
 }
 
 .controls {
-  margin-top: 20px;
   text-align: center;
 
   .playback-controls {

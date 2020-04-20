@@ -47,6 +47,7 @@
         </p>
       </div> 
     </div>
+    <div class="footer">
     <div class="controls">
       <audio
         id="audioPlayer"
@@ -57,7 +58,6 @@
         <span v-else>STOP</span>
       </div>
     </div>
-    <div class="footer">
       <div class= "footer-left">
         <span>{{ numberOfListeners || "probably millions of" }}</span>
         <span> subpartisan</span>
@@ -294,8 +294,7 @@ export default {
 }
 
 .controls {
-  margin-top: 20px;
-  text-align: center;
+  left: 50%;
 
   .playback-controls {
     transition: all .2s ease-in-out;
@@ -319,8 +318,11 @@ export default {
 }
 
 .footer {
+  position: sticky;
+  bottom: 0;
   padding: 25px;
   font-size: 0.7rem;
+  background-color: #FA6000;
 
   a {
     text-decoration: none;
