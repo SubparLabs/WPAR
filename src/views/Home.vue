@@ -345,6 +345,7 @@ export default {
   }
 
   .footer-left {
+  display: none;
   float: left;
   }
 }
