@@ -4,7 +4,7 @@ const apiRoot = 'https://stream.subpar.fm/api/station/1/streamers';
 
 exports.handler = (event, context, callback) => {
 
-	const name = event. queryStringParameters.n || "anon";
+	const name = event.queryStringParameters.n || "anon";
 	
 	axios({
 		method:'post', 
@@ -18,9 +18,7 @@ exports.handler = (event, context, callback) => {
 			display_name: name,
 			is_active: true,
 			enforce_schedule: false,
-			scheule_items: [
-				null
-			]
+			schedule_items: []
 		}
 	}).then(res => {
 		callback(null, {
