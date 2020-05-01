@@ -20,12 +20,13 @@
         <span v-if="live" class="badge">live</span>
       </div>
       <div class="metadata">
-        <div v-if="live" class="now-playing">
+        <div class="now-playing">
           <span class="header">now</span>
-          <p>
+          <p v-if="live">
             <span class="artist">{{ playing.artist }}</span> |
             <span class="title">{{ playing.title }}</span>
           </p>
+          <Guest-DJ v-else />
         </div>
         <div class="history">
           <span class="header">earlier</span>
@@ -56,10 +57,10 @@
         id="audioPlayer"
         src="https://stream.subpar.fm:8000/radio.mp3"
       ></audio>
-      <div class="playback-controls disable-select" @click="togglePlay">
+        <Button class="playback-controls disable-select"  v-bind:action="togglePlay">
         <span v-if="!active">PLAY</span>
         <span v-else>STOP</span>
-      </div>
+        </Button>
     </div>
       <div class= "footer-left">
         <span>{{ numberOfListeners || "probably millions of" }}</span>
@@ -76,12 +77,15 @@
 </template>
 
 <script>
+import GuestDJ from '../components/GuestDJ';
+import Button from '../components/common/Button';
 const NchanSubscriber = require("nchan");
 
 const junkArtistValues = ["(null)", "", "subpar.fm"];
 
 export default {
   name: "Home",
+  components: {GuestDJ, Button},
   data() {
     return {
       active: false,
@@ -301,23 +305,9 @@ export default {
   display: flex;
 
   .playback-controls {
-    transition: all .2s ease-in-out;
-    cursor: pointer;
-    position: relative;
-    border: 1px solid white;
-    display: inline-block;
-    padding: .5rem 1.5rem;
-    margin: 0 auto;
     font-size: 2.25rem;
     font-weight: 900;
     line-height: 50px;
-    text-align: center;
-    width: 148px;
-
-    &:hover {
-      background: white;
-      color: #FA6000;
-    }
   }
 }
 .chat {

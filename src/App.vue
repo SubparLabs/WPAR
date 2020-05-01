@@ -29,7 +29,17 @@
   p {
     line-height: 1.25rem;
   }
-  
+
+  button {
+    -webkit-appearance: none;
+    color: unset;
+    letter-spacing: unset;
+    word-spacing: unset;
+    text-transform: unset;
+    text-shadow: unset;
+    font: unset;
+  }
+
   #app {
     height: 100%;
   }
