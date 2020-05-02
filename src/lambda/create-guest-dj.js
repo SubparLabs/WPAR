@@ -11,6 +11,22 @@ function generateTempPassword() {
   }, "");
 }
 
+function disconnectDJ() {
+  axios({
+    method: "POST",
+    url: "https://stream.subpar.fm/api/station/1/backend/disconnect",
+    headers: {
+      "X-API-Key": process.env.SUBPAR_API_KEY,
+    },
+  })
+  .then((response) => {
+    return response.data;
+  })
+  .catch((err) => {
+    console.log(err);
+  })
+}
+
 exports.handler = (event, context, callback) => {
   const displayName = event.queryStringParameters.n || "anon";
   const password = generateTempPassword();
