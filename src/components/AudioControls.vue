@@ -18,7 +18,7 @@
       </div>
     </div>
     <canvas
-      :class="hasPlayBeenClicked && 'active'"
+      :class="visualizing && 'active'"
       class="vis-canvas"
       :width="bodyWidth"
       height="100"
@@ -42,6 +42,7 @@ export default {
     return {
       hasPlayBeenClicked: false,
       active: false,
+      visualizing: false,
       player: null,
       track: null,
       visContext: null,
@@ -49,28 +50,34 @@ export default {
     };
   },
   methods: {
+    initVisualization() {
+      // SAFARI BUG - analyizing a stream fails silently. Skip if AudioContext is not defined.
+      if (window.AudioContext) {
+        this.visualizing = true;
+        const audioContext = new window.AudioContext();
+        // create node for volume control
+        this.gainNode = audioContext.createGain();
+        // create node for visalization
+        this.analyserNode = audioContext.createAnalyser();
+        // create source from player element
+        this.track = audioContext.createMediaElementSource(this.player);
+        // connect audio track to analyzer and volume nodes, and destination
+        this.track
+          .connect(this.gainNode)
+          .connect(this.analyserNode)
+          .connect(audioContext.destination);
+        // start the visualization
+        this.visualize();
+      }
+    },
     initPlayer() {
-      const audioContext = new (window.AudioContext ||
-        window.webkitAudioContext)();
       // store reference to <audio> element
       this.player = document.getElementById("audioPlayer");
-      // create node for volume control
-      this.gainNode = audioContext.createGain();
-      // create node for visalization
-      this.analyserNode = audioContext.createAnalyser();
-      // create source from player element
-      this.track = audioContext.createMediaElementSource(this.player);
-      // connect audio track to analyzer and volume nodes, and destination
-      this.track
-        .connect(this.gainNode)
-        .connect(this.analyserNode)
-        .connect(audioContext.destination);
-      // start the visualization
-      this.visualize();
     },
     togglePlay() {
       if (!this.hasPlayBeenClicked) {
         this.initPlayer();
+        this.initVisualization();
         this.hasPlayBeenClicked = true;
       }
       this.active = !this.active;
