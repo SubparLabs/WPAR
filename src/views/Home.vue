@@ -52,16 +52,6 @@
       </div> 
     </div>
     <div class="footer">
-    <div class="controls">
-      <audio
-        id="audioPlayer"
-        src="https://stream.subpar.fm:8000/radio.mp3"
-      ></audio>
-        <Button class="playback-controls disable-select"  v-bind:action="togglePlay">
-        <span v-if="!active">PLAY</span>
-        <span v-else>STOP</span>
-        </Button>
-    </div>
       <div class= "footer-left">
         <span>{{ numberOfListeners || "probably millions of" }}</span>
         <span> subpartisan</span>
@@ -69,27 +59,24 @@
         <span v-else> is</span>
         <span> tuned in</span>
       </div>
-      <div class="footer-right">
-        <router-link to='/about'>about subpar</router-link>
-      </div>
+    <AudioControls />
     </div>
   </div>
 </template>
 
 <script>
 import GuestDJ from '../components/GuestDJ';
-import Button from '../components/common/Button';
+import AudioControls from '../components/AudioControls'
+
 const NchanSubscriber = require("nchan");
 
 const junkArtistValues = ["(null)", "", "subpar.fm"];
 
 export default {
   name: "Home",
-  components: {GuestDJ, Button},
+  components: {AudioControls, GuestDJ },
   data() {
     return {
-      active: false,
-      player: null,
       live: null,
       streamer: null,
       playing: {
@@ -118,9 +105,6 @@ export default {
     }
   },
   methods: {
-    initPlayer() {
-      this.player = document.getElementById("audioPlayer");
-    },
     setStatus(station) {
       this.live = station.live.is_live;
 
@@ -184,13 +168,8 @@ export default {
       });
       sub.start();
     },
-    togglePlay() {
-      this.active = !this.active;
-      this.active ? this.player.play() : this.player.pause();
-    }
   },
   mounted() {
-    this.initPlayer();
     this.getInitialData();
     this.subscribeToPlayer();
     this.getScheduleData();
@@ -301,15 +280,6 @@ export default {
   }
 }
 
-.controls {
-  display: flex;
-
-  .playback-controls {
-    font-size: 2.25rem;
-    font-weight: 900;
-    line-height: 50px;
-  }
-}
 .chat {
   position: sticky;
   right: 0;
@@ -317,7 +287,7 @@ export default {
 .footer {
   position: sticky;
   bottom: 0;
-  padding: 5px 25px 25px 25px;
+  padding: 5px 25px 0 25px;
   font-size: 0.7rem;
   background-color: #FA6000;
 
@@ -331,7 +301,8 @@ export default {
   }
 
   .footer-right {
-  float: right;
+    float: right;
+    margin-top: auto;
   }
 
   .footer-left {
