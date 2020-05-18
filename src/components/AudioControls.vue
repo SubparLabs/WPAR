@@ -99,7 +99,7 @@ export default {
       this.drawVisual = requestAnimationFrame(this.draw);
       this.analyserNode.getByteFrequencyData(this.dataArray);
 
-      this.visContext.fillStyle = "rgb(188, 191, 232, 1)";
+      this.visContext.fillStyle = "rgb(250, 96, 0)";
 
       this.visContext.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -117,14 +117,14 @@ export default {
         if (this.dataArray[i] > max) max = this.dataArray[i];
       }
       if (max > this.canvas.height) {
-        normalizeCoefficient = (this.canvas.height * 1.5) / max;
+        normalizeCoefficient = (this.canvas.height * 1.7) / max;
       }
 
       for (let i = 0; i < this.bufferLength; i++) {
         barHeight = this.dataArray[i] * normalizeCoefficient;
-        redness = barHeight + 20;
-        greenness = i * 2 + 50;
-        blueness = i;
+        blueness = (barHeight * 2 ) + 50;
+        greenness = (i * 4) + barHeight;
+        redness = 100 + i;
 
         this.visContext.fillStyle = `rgb(${redness}, ${greenness}, ${blueness})`;
         this.visContext.fillRect(
