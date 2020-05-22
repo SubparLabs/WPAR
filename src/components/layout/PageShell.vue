@@ -1,17 +1,5 @@
 <template>
   <div class="page-shell">
-    <div class="chat">
-      <script
-        type="application/javascript"
-        id="cid0020000248413075345"
-        data-cfasync="false"
-        async
-        src="//st.chatango.com/js/gz/emb.js"
-        style="width: 200px;height: 300px;"
-      >
-        {"handle":"wpar","arch":"js","styles":{"a":"FFFFFF","b":100,"c":"FFFFFF","d":"FFFFFF","f":0,"g":"FFFFFF","i":0,"j":"FFFFFF","k":"FFFFFF","l":"FFFFFF","m":"FFFFFF","n":"FFFFFF","p":"10","q":"FFFFFF","v":0,"cv":1,"cvfnt":"monospace, sans-serif","cvfntsz":"15px","cvbg":"CC0000","cvbga":0,"cvfg":"ffffff","cvw":75,"cvh":30,"surl":0,"allowpm":0,"showhdr":0,"sbc":"FFFFFF","sba":20,"pos":"tr","usricon":0}}
-      </script>
-    </div>
     <div class="wrapper">
       <header class="banner">
         <span class="letter w-hover">w</span>
