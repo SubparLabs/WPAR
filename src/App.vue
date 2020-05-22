@@ -1,47 +1,52 @@
 <template>
   <div id="app">
-    <router-view/>
+    <PageShell />
   </div>
 </template>
-
+<script>
+import PageShell from "./components/layout/PageShell";
+export default {
+  components: { PageShell },
+};
+</script>
 <style lang="scss">
-  @import url('https://fonts.googleapis.com/css?family=Londrina+Outline|Monoton|Roboto|Montserrat&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Londrina+Outline|Monoton|Roboto|Montserrat&display=swap");
 
-  html {
-      background-color: #FA6000;
-      color: white;
-      font-family: 'Montserrat';
-      font-size: 24px;
-      height: 100%;
+html {
+  color: white;
+  font-family: "Montserrat";
+  font-size: 24px;
 
-      @media only screen and (max-width: 999px) {
-        font-size: 20px;
-      }
-
-      @media only screen and (max-width: 579px) {
-        font-size: 16px;
-      }
-  }
-  body {
-    height: 100%;
+  @media only screen and (max-width: 999px) {
+    font-size: 20px;
   }
 
-  p {
-    line-height: 1.25rem;
+  @media only screen and (max-width: 579px) {
+    font-size: 16px;
   }
+}
 
-  button {
-    -webkit-appearance: none;
-    color: unset;
-    letter-spacing: unset;
-    word-spacing: unset;
-    text-transform: unset;
-    text-shadow: unset;
-    font: unset;
-  }
+body {
+  min-height: 100%;
+  background-image: linear-gradient(#fa6000, #fa8e00);
+  background-attachment: fixed;
+}
 
-  #app {
-    height: 100%;
-  }
+p {
+  line-height: 1.25rem;
+}
 
+button {
+  -webkit-appearance: none;
+  color: unset;
+  letter-spacing: unset;
+  word-spacing: unset;
+  text-transform: unset;
+  text-shadow: unset;
+  font: unset;
+}
+
+#app {
+  height: 100%;
+}
 </style>

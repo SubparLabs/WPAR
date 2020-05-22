@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="controls">
+    <div class="controls" :class="visualizing && 'active'">
       <audio
         crossorigin
         id="audioPlayer"
@@ -31,6 +31,7 @@ import Button from "./common/Button";
 export default {
   name: "AudioControls",
   components: { Button },
+  props: ["visCallback"],
   beforeMount() {
     this.bodyWidth = document.body.clientWidth;
   },
@@ -68,6 +69,7 @@ export default {
           .connect(audioContext.destination);
         // start the visualization
         this.visualize();
+        this.$emit("setVisualiztion", true);
       }
     },
     initPlayer() {
@@ -98,10 +100,8 @@ export default {
     draw() {
       this.drawVisual = requestAnimationFrame(this.draw);
       this.analyserNode.getByteFrequencyData(this.dataArray);
-
-      this.visContext.fillStyle = "rgb(250, 96, 0)";
-
-      this.visContext.fillRect(0, 0, this.canvas.width, this.canvas.height);
+      // this.visC
+      this.visContext.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
       const barWidth = (this.canvas.width / this.bufferLength) * 2.5;
 
@@ -117,14 +117,14 @@ export default {
         if (this.dataArray[i] > max) max = this.dataArray[i];
       }
       if (max > this.canvas.height) {
-        normalizeCoefficient = (this.canvas.height * 1.7) / max;
+        normalizeCoefficient = (this.canvas.height * 1.8) / max;
       }
 
       for (let i = 0; i < this.bufferLength; i++) {
         barHeight = this.dataArray[i] * normalizeCoefficient;
-        blueness = (barHeight * 2 ) + 50;
-        greenness = (i * 4) + barHeight;
         redness = 100 + i;
+        greenness = i * 4 + barHeight;
+        blueness = barHeight * 2 + 50;
 
         this.visContext.fillStyle = `rgb(${redness}, ${greenness}, ${blueness})`;
         this.visContext.fillRect(
@@ -143,22 +143,29 @@ export default {
 <style lang="scss">
 .controls {
   display: flex;
-  margin-bottom: 1rem;
+  bottom: 0;
+  transition: all 1s ease-in;
+  position: relative;
 
   .playback-controls {
     font-size: 2.25rem;
     font-weight: 900;
     line-height: 50px;
   }
+
+  &.active {
+    bottom: 100px;
+  }
 }
 .vis-canvas {
   height: 0;
-  width: calc(100% + 50px);
+  // width: calc(100% + 50px);
+  width: 100%;
   transition: height 1s ease-in;
-  position: relative;
-  top: 0;
+  position: absolute;
+  bottom: -18px;
   left: 0;
-  margin-left: -25px;
+  // margin-left: -25px;
 
   &.active {
     height: 100px;

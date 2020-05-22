@@ -1,24 +1,5 @@
 <template>
-  <div>
-  <div class="chat">
-  <script type="application/javascript" id="cid0020000248413075345" data-cfasync="false" async src="//st.chatango.com/js/gz/emb.js" style="width: 200px;height: 300px;">{"handle":"wpar","arch":"js","styles":{"a":"FA6000","b":100,"c":"FFFFFF","d":"FFFFFF","f":0,"g":"FFFFFF","i":0,"j":"FFFFFF","k":"FFFFFF","l":"FFFFFF","m":"FFFFFF","n":"FFFFFF","p":"10","q":"FFFFFF","v":0,"cv":1,"cvfnt":"monospace, sans-serif","cvfntsz":"15px","cvbg":"CC0000","cvbga":0,"cvfg":"ffffff","cvw":75,"cvh":30,"surl":0,"allowpm":0,"showhdr":0,"sbc":"FFFFFF","sba":20,"pos":"tr","usricon":0}}</script>
-  </div>  
     <div class="display">
-      <div class="banner">
-        <span class="letter w-hover">w</span>
-        <span
-          class="letter p-hover"
-          onclick="document.getElementById('player').play()"
-          >p</span
-        >
-        <span
-          class="letter a-hover"
-          onclick="document.getElementById('player').pause()"
-          >a</span
-        >
-        <span class="letter r-hover">r</span>
-        <span v-if="live" class="badge">live</span>
-      </div>
       <div class="metadata">
         <div class="now-playing">
           <span class="header">now</span>
@@ -31,6 +12,14 @@
         <div class="history">
           <span class="header">earlier</span>
           <p v-for="song in filteredHistory" v-bind:key="song.id">
+            <a class="individual-song" :href="song.url" target="_blank">
+              <span v-if="song.artist.length>25" class="artist">{{ song.artist.substring(0,25)+"..." }}</span>
+              <span v-else class="artist">{{ song.artist }}</span> |
+              <span v-if="song.title.length>30" class="title">{{ song.title.substring(0,30)+"..." }}</span>
+              <span v-else class="title">{{ song.title }}</span>
+            </a>
+          </p>
+           <p v-for="song in filteredHistory" v-bind:key="song.id">
             <a class="individual-song" :href="song.url" target="_blank">
               <span v-if="song.artist.length>25" class="artist">{{ song.artist.substring(0,25)+"..." }}</span>
               <span v-else class="artist">{{ song.artist }}</span> |
@@ -51,22 +40,10 @@
         </p>
       </div> 
     </div>
-    <div class="footer">
-      <div class= "footer-left">
-        <span>{{ numberOfListeners || "probably millions of" }}</span>
-        <span> subpartisan</span>
-        <span v-if="numberOfListeners !== 1">s are</span>
-        <span v-else> is</span>
-        <span> tuned in</span>
-      </div>
-    <AudioControls />
-    </div>
-  </div>
 </template>
 
 <script>
 import GuestDJ from '../components/GuestDJ';
-import AudioControls from '../components/AudioControls'
 
 const NchanSubscriber = require("nchan");
 
@@ -74,10 +51,10 @@ const junkArtistValues = ["(null)", "", "subpar.fm"];
 
 export default {
   name: "Home",
-  components: {AudioControls, GuestDJ },
+  components: { GuestDJ },
   data() {
     return {
-      live: null,
+      live: false,
       streamer: null,
       playing: {
         artist: null,
@@ -107,6 +84,7 @@ export default {
   methods: {
     setStatus(station) {
       this.live = station.live.is_live;
+      this.$emit('setLive', this.live)
 
       if (this.live) {
         this.streamer = station.live.streamer_name;
@@ -167,7 +145,7 @@ export default {
         this.setStatus(station);
       });
       sub.start();
-    },
+    }
   },
   mounted() {
     this.getInitialData();
@@ -191,6 +169,9 @@ export default {
   display: flex;
   flex-wrap: wrap;
   padding: 1rem;
+  align-content: flex-start;
+  align-items: flex-start;
+  transition: height 1s ease-in;
 
   & > div {
     padding: 1rem;
@@ -199,52 +180,6 @@ export default {
   a {
     text-decoration: none;
     color: white;
-  }
-
-
-  .banner {
-    color: white;
-    flex-grow: 1;
-    text-align: center;
-    width: 100%;
-    z-index: 100;
-
-    .letter {
-      font-family: "Londrina Outline";
-      font-size: 25vw;
-      text-align: center;
-      text-transform: uppercase;
-    }
-
-      @media only screen and (min-width: 1000px) {
-        width: unset;
-
-        .letter {
-          display: block;
-          font-size: 20vh;
-        }
-      }
-
-    .w-hover:hover {
-      color: #ffb400;
-    }
-
-    .p-hover:hover {
-      color: #00a6ed;
-    }
-
-    .a-hover:hover {
-      color: #7fb000;
-    }
-    .r-hover:hover {
-      color: #0d2c54;
-    }
-
-    .badge {
-      font-size: 1.375rem;
-      font-weight: 900;
-      text-transform: uppercase;
-    }
   }
 
     .header {
@@ -277,37 +212,6 @@ export default {
     .show-time {
     text-transform: lowercase;
     }
-  }
-}
-
-.chat {
-  position: sticky;
-  right: 0;
-}
-.footer {
-  position: sticky;
-  bottom: 0;
-  padding: 5px 25px 0 25px;
-  font-size: 0.7rem;
-  background-color: #FA6000;
-
-  a {
-    text-decoration: none;
-    color: white;
-  }
-
-  a:hover {
-    color: #0d2c54;
-  }
-
-  .footer-right {
-    float: right;
-    margin-top: auto;
-  }
-
-  .footer-left {
-  display: none;
-  float: left;
   }
 }
 </style>
