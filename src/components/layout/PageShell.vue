@@ -43,30 +43,33 @@ $med-header-height: 195px;
 $mobile-header-height: 110px;
 $canvas-height: 100px;
 
+$viewport-height: 100vh; // Fallback for browsers that do not support Custom Properties
+$viewport-height: calc(var(--vh, 1vh) * 100); // see public/scripts/set-vh.js
+
 .page-shell {
   main {
-    height: calc(100vh - #{$footer-height});
+    height: calc(#{$viewport-height} - #{$footer-height});
     overflow-y: scroll;
     flex-grow: 1;
     transition: height 1s ease-in;
 
     &.vis-height-offset {
-      height: calc(100vh - #{$footer-height} - #{$canvas-height});
+      height: calc(#{$viewport-height} - #{$footer-height} - #{$canvas-height});
     }
 
     @media only screen and (max-width: 999px) {
-      height: calc(100vh - #{$footer-height} - #{$med-header-height});
+      height: calc(#{$viewport-height} - #{$footer-height} - #{$med-header-height});
       &.vis-height-offset {
         height: calc(
-          100vh - #{$footer-height} - #{$med-header-height} - #{$canvas-height}
+          #{$viewport-height} - #{$footer-height} - #{$med-header-height} - #{$canvas-height}
         );
       }
     }
     @media only screen and (max-width: 579px) {
-      height: calc(100vh - #{$footer-height} - #{$mobile-header-height});
+      height: calc(#{$viewport-height} - #{$footer-height} - #{$mobile-header-height});
       &.vis-height-offset {
         height: calc(
-          100vh - #{$footer-height} - #{$mobile-header-height} - #{$canvas-height}
+          #{$viewport-height} - #{$footer-height} - #{$mobile-header-height} - #{$canvas-height}
         );
       }
     }
