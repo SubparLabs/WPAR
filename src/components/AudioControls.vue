@@ -144,7 +144,7 @@ export default {
 .controls {
   display: flex;
   bottom: 0;
-  transition: all 1s ease-in;
+  transition: all 0.5s ease-in;
   position: relative;
 
   .playback-controls {
@@ -161,7 +161,7 @@ export default {
   height: 0;
   // width: calc(100% + 50px);
   width: 100%;
-  transition: height 1s ease-in;
+  transition: height 0.5s ease-in;
   position: absolute;
   bottom: -18px;
   left: 0;
