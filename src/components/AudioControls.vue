@@ -4,7 +4,7 @@
       <audio
         crossorigin
         id="audioPlayer"
-        src="https://stream.subpar.fm:8000/radio.mp3"
+        src="https://stream.subpar.fm/radio/8000/radio.mp3"
       ></audio>
       <Button
         class="playback-controls disable-select"
