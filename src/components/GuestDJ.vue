@@ -21,9 +21,7 @@
     <div v-if="isComplete">
       <p>Username: {{ username }}</p>
       <p>Password: {{ password }}</p>
-      <a href="https://stream.subpar.fm/public/subpar/dj" target="_blank"
-        >To the booth!</a
-      >
+      <Button v-bind:action="toBooth">To the booth!</Button>
     </div>
   </div>
 </template>
@@ -57,6 +55,9 @@ export default {
           this.showInputs = false;
         })
         .catch(console.error);
+    },
+    toBooth() {
+      window.open("https://stream.subpar.fm/public/subpar/dj");
     },
   },
 };
