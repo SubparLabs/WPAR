@@ -2,7 +2,7 @@ const axios = require("axios");
 const updateGuestUrl = "https://stream.subpar.fm/api/station/1/streamer/24";
 
 const chars =
-  "!@$%&abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@$%&";
+  "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
 
 function generateTempPassword() {
   return new Array(12).fill(1).reduce((prev) => {
