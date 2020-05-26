@@ -100,7 +100,7 @@ export default {
           song.artist +
           " " +
           song.title,
-        id: song.sh_id,
+        id: song.id,
       }));
     },
     getInitialData() {
