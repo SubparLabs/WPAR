@@ -56,7 +56,7 @@ export default {
         .catch(console.error);
     },
     toBooth() {
-      window.open(`https://stream.subpar.fm/public/subpar/dj?n=`+${this.username}+`&p=`+${this.password});
+      window.open(`https://stream.subpar.fm/public/subpar/dj?n=${this.username}&p={this.password}`);
     },
   },
 };
