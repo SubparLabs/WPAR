@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="controls" :class="visualizing && 'active'">
+    <div class="controls" :class="isActive && 'active'">
       <audio
         crossorigin
         id="audioPlayer"
@@ -10,7 +10,7 @@
         class="playback-controls disable-select"
         v-bind:action="togglePlay"
       >
-        <span v-if="!active">PLAY</span>
+        <span v-if="!isActive">PLAY</span>
         <span v-else>STOP</span>
       </Button>
       <div class="footer-right">
@@ -18,7 +18,7 @@
       </div>
     </div>
     <canvas
-      :class="visualizing && 'active'"
+      :class="isActive && 'active'"
       class="vis-canvas"
       :width="bodyWidth"
       height="100"
@@ -42,7 +42,7 @@ export default {
   data() {
     return {
       hasPlayBeenClicked: false,
-      active: false,
+      isActive: false,
       visualizing: false,
       player: null,
       track: null,
@@ -54,7 +54,6 @@ export default {
     initVisualization() {
       // SAFARI BUG - analyizing a stream fails silently. Skip if AudioContext is not defined.
       if (window.AudioContext) {
-        this.visualizing = true;
         const audioContext = new window.AudioContext();
         // create node for volume control
         this.gainNode = audioContext.createGain();
@@ -82,8 +81,8 @@ export default {
         this.initVisualization();
         this.hasPlayBeenClicked = true;
       }
-      this.active = !this.active;
-      this.active ? this.player.play() : this.player.pause();
+      this.isActive = !this.isActive;
+      this.isActive ? this.player.play() : this.player.pause();
     },
     handleVolumeChange({ target }) {
       this.gainNode.gain.value = target.value;
