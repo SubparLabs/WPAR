@@ -19,14 +19,6 @@
               <span v-else class="title">{{ song.title }}</span>
             </a>
           </p>
-           <p v-for="song in filteredHistory" v-bind:key="song.id">
-            <a class="individual-song" :href="song.url" target="_blank">
-              <span v-if="song.artist.length>25" class="artist">{{ song.artist.substring(0,25)+"..." }}</span>
-              <span v-else class="artist">{{ song.artist }}</span> |
-              <span v-if="song.title.length>30" class="title">{{ song.title.substring(0,30)+"..." }}</span>
-              <span v-else class="title">{{ song.title }}</span>
-            </a>
-          </p>
         </div>
       </div>
       <div class="schedule">
