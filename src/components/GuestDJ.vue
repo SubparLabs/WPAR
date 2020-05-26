@@ -19,8 +19,7 @@
       >
     </div>
     <div v-if="isComplete">
-      <p>Username: {{ username }}</p>
-      <p>Password: {{ password }}</p>
+      <p>You're all set...</p>
       <Button v-bind:action="toBooth">To the booth!</Button>
     </div>
   </div>
@@ -57,7 +56,7 @@ export default {
         .catch(console.error);
     },
     toBooth() {
-      window.open("https://stream.subpar.fm/public/subpar/dj");
+      window.open("https://stream.subpar.fm/public/subpar/dj?n=${this.username}&p=${this.password}");
     },
   },
 };
