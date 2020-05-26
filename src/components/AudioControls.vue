@@ -159,13 +159,11 @@ export default {
 }
 .vis-canvas {
   height: 0;
-  // width: calc(100% + 50px);
   width: 100%;
   transition: height 0.5s ease-in;
   position: absolute;
-  bottom: -18px;
+  bottom: 0;
   left: 0;
-  // margin-left: -25px;
 
   &.active {
     height: 100px;
