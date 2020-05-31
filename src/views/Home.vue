@@ -1,41 +1,42 @@
 <template>
-    <div class="display">
-      <div class="metadata">
-        <div class="now-playing">
-          <span class="header">now</span>
-          <p v-if="live">
-            <span class="artist">{{ playing.artist }}</span> |
-            <span class="title">{{ playing.title }}</span>
-          </p>
-          <Guest-DJ v-else />
+      <div v-if="!isLoading" class="display">
+        <div class="metadata">
+          <div class="now-playing">
+            <span class="header">now</span>
+            <p v-if="live">
+              <span class="artist">{{ playing.artist }}</span> |
+              <span class="title">{{ playing.title }}</span>
+            </p>
+            <Guest-DJ v-else />
+          </div>
+          <div class="history">
+            <span class="header">earlier</span>
+            <p v-for="song in filteredHistory" v-bind:key="song.id">
+              <a class="individual-song" :href="song.url" target="_blank">
+                <span v-if="song.artist.length>25" class="artist">{{ song.artist.substring(0,25)+"..." }}</span>
+                <span v-else class="artist">{{ song.artist }}</span> |
+                <span v-if="song.title.length>30" class="title">{{ song.title.substring(0,30)+"..." }}</span>
+                <span v-else class="title">{{ song.title }}</span>
+              </a>
+            </p>
+          </div>
         </div>
-        <div class="history">
-          <span class="header">earlier</span>
-          <p v-for="song in filteredHistory" v-bind:key="song.id">
-            <a class="individual-song" :href="song.url" target="_blank">
-              <span v-if="song.artist.length>25" class="artist">{{ song.artist.substring(0,25)+"..." }}</span>
-              <span v-else class="artist">{{ song.artist }}</span> |
-              <span v-if="song.title.length>30" class="title">{{ song.title.substring(0,30)+"..." }}</span>
-              <span v-else class="title">{{ song.title }}</span>
-            </a>
+        <div class="schedule">
+          <span class="header">upcoming shows</span>
+            <p v-if="live" class="individual-show">
+              <span class="show-name">{{ streamer }}</span> – 
+              <span class="show-time">NOW</span>  
+          <p v-for="show in filteredSchedule" class="individual-show" v-bind:key="show.name">
+            <span class="show-name">{{ show.name }}</span> – 
+            <span v-if="" class="show-time">{{ show.start | moment("calendar") }}</span>
           </p>
-        </div>
-      </div>
-      <div class="schedule">
-        <span class="header">upcoming shows</span>
-          <p v-if="live" class="individual-show">
-            <span class="show-name">{{ streamer }}</span> – 
-            <span class="show-time">NOW</span>  
-        <p v-for="show in filteredSchedule" class="individual-show" v-bind:key="show.name">
-          <span class="show-name">{{ show.name }}</span> – 
-          <span v-if="" class="show-time">{{ show.start | moment("calendar") }}</span>
-        </p>
       </div> 
     </div>
 </template>
 
 <script>
 import GuestDJ from '../components/GuestDJ';
+import SpinningRecord  from '../components/SpinningRecord';
 
 import uniqBy from 'lodash.uniqby';
 import NchanSubscriber from "nchan";
@@ -44,9 +45,10 @@ const junkArtistValues = ["(null)", "", "subpar.fm"];
 
 export default {
   name: "Home",
-  components: { GuestDJ },
+  components: { GuestDJ, SpinningRecord },
   data() {
     return {
+      isLoading: true,
       live: false,
       streamer: null,
       playing: {
@@ -109,7 +111,8 @@ export default {
         .then((response) => {
           return response.json();
         })
-        .then(this.setStatus);
+        .then(this.setStatus)
+        .then(() => setTimeout(() => this.setLoading(false), 500));
     },
     setSchedule(schedule) {
       this.schedule = schedule.map(show => ({
@@ -118,6 +121,10 @@ export default {
       end: show.end,
       live: show.is_now,
       }))
+    },
+    setLoading (isLoading) {
+      this.isLoading = isLoading;
+      this.$emit('setLoading', this.isLoading);
     },
     getScheduleData() {
       fetch("https://stream.subpar.fm/api/station/1/schedule")
@@ -139,6 +146,9 @@ export default {
       });
       sub.start();
     }
+  },
+  beforeMount() {
+    this.setLoading(true);
   },
   mounted() {
     this.getInitialData();
