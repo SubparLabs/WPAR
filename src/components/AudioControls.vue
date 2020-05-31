@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="controls" :class="isActive && 'active'">
+    <div class="controls" :class="isVisualizing && isActive ? 'active' : ''">
       <audio
         crossorigin
         id="audioPlayer"
@@ -18,7 +18,7 @@
       </div>
     </div>
     <canvas
-      :class="isActive && 'active'"
+      :class="isVisualizing && isActive ? 'active' : ''"
       class="vis-canvas"
       :width="bodyWidth"
       height="100"
@@ -43,7 +43,7 @@ export default {
     return {
       hasPlayBeenClicked: false,
       isActive: false,
-      visualizing: false,
+      isVisualizing: false,
       player: null,
       track: null,
       visContext: null,
@@ -69,6 +69,7 @@ export default {
         // start the visualization
         this.visualize();
         this.$emit("setVisualiztion", true);
+        this.isVisualizing = true;
       }
     },
     initPlayer() {

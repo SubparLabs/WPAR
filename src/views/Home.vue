@@ -37,7 +37,8 @@
 <script>
 import GuestDJ from '../components/GuestDJ';
 
-const NchanSubscriber = require("nchan");
+import uniqBy from 'lodash.uniqby';
+import NchanSubscriber from "nchan";
 
 const junkArtistValues = ["(null)", "", "subpar.fm"];
 
@@ -59,11 +60,11 @@ export default {
   },
   computed: {
     filteredHistory() {
-      return this.history.filter((song) => {
+      return uniqBy(this.history.filter((song) => {
         if (junkArtistValues.indexOf(song.artist) < 0) {
           return song;
         }
-      });
+      }), ({id}) => id);
     },
     filteredSchedule() {
       return this.schedule.filter((show) => {
