@@ -8,8 +8,12 @@
     "orientation": "portrait",
     "icons": [
       {
-        "src": "/img/subpar_logo_72.png",
+        "src": "/img/icons/subpar_logo_72.png",
         "sizes": "72x72"
+      },
+      {
+        "src": "/img/icons/subpar_logo_144.png",
+        "sizes": "144x144"
       }
     ]
   }
