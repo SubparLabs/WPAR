@@ -1,0 +1,15 @@
+{
+    "name": "Subpar",
+    "short_name": "WPAR",
+    "start_url": "/index.html",
+    "display": "standalone",
+    "theme_color": "#fa6000",
+    "background_color": "#fa6000",
+    "orientation": "portrait",
+    "icons": [
+      {
+        "src": "/img/subpar_logo_72.png",
+        "sizes": "72x72"
+      }
+    ]
+  }
