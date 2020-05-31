@@ -1,7 +1,7 @@
 {
     "name": "Subpar",
     "short_name": "WPAR",
-    "start_url": "/index.html",
+    "start_url": "/",
     "display": "standalone",
     "theme_color": "#fa6000",
     "background_color": "#fa6000",
