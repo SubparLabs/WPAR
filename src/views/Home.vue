@@ -88,15 +88,16 @@ export default {
       }
 
       this.playing = {
-        artist: station.now_playing.song.artist,
-        title: station.now_playing.song.title,
+        artist: station.now_playing.song.text.split(" - ")[0],
+        title: station.now_playing.song.text.split(" - ")[1],
       };
 
       this.numberOfListeners = station.listeners.total;
 
       this.history = station.song_history.map(({ song }) => ({
-        artist: song.artist,
-        title: song.title,
+        artist: song.text.split(" - ")[0],
+        title: song.text.split(" - ")[1],
+        text: song.text,
         art: song.art,
         url:
           "https://www.youtube.com/results?search_query=" +
