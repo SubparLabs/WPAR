@@ -4,7 +4,7 @@
           <div class="now-playing">
             <span class="header">now</span>
             <p v-if="live">
-              <span class="artist">{{ playing.artist }}</span> |
+              <span class="artist">{{ playing.artist }}</span>
               <span class="title">{{ playing.title }}</span>
             </p>
             <Guest-DJ v-else />
@@ -14,7 +14,7 @@
             <p v-for="song in filteredHistory" v-bind:key="song.id">
               <a class="individual-song" :href="song.url" target="_blank">
                 <span v-if="song.artist.length>25" class="artist">{{ song.artist.substring(0,25)+"..." }}</span>
-                <span v-else class="artist">{{ song.artist }}</span> |
+                <span v-else class="artist">{{ song.artist }}</span>
                 <span v-if="song.title.length>30" class="title">{{ song.title.substring(0,30)+"..." }}</span>
                 <span v-else class="title">{{ song.title }}</span>
               </a>
@@ -88,22 +88,20 @@ export default {
       }
 
       this.playing = {
-        artist: station.now_playing.song.text.split(" - ")[0],
-        title: station.now_playing.song.text.split(" - ")[1],
+        artist: station.now_playing.song.text,
+        title: "",
       };
 
       this.numberOfListeners = station.listeners.total;
 
       this.history = station.song_history.map(({ song }) => ({
-        artist: song.text.split(" - ")[0],
-        title: song.text.split(" - ")[1],
+        artist: song.text,
+        title: "",
         text: song.text,
         art: song.art,
         url:
           "https://www.youtube.com/results?search_query=" +
-          song.artist +
-          " " +
-          song.title,
+          song.text,
         id: song.id,
       }));
     },
