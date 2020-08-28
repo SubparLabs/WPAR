@@ -28,7 +28,8 @@ html {
 
 body {
   min-height: 100%;
-  background-image: linear-gradient(#fa6000, #fa8e00);
+  background: rgb(250,96,0);
+  background: linear-gradient(0deg, rgba(250,96,0,1) 0%, rgba(0,0,0,1) 15%);
   background-attachment: fixed;
 }
 
