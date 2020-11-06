@@ -4,7 +4,8 @@
           <div class="now-playing">
             <span class="header">now</span>
             <p v-if="live">
-              <span class="artist">{{ playing.artist }}</span> |
+              <span class="artist">{{ playing.artist }}</span>
+              <span v-if="playing.artist && playing.title">|</span>
               <span class="title">{{ playing.title }}</span>
             </p>
             <Guest-DJ v-else />
