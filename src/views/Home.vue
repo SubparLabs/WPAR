@@ -78,7 +78,7 @@ export default {
   },
   methods: {
     setStatus(station) {
-      this.live = station.live.is_live;
+      this.live = station.live.is_live || station.now_playing;
       this.$emit('setLive', this.live)
 
       if (this.live) {
