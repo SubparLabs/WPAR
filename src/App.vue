@@ -28,8 +28,8 @@ html {
 
 body {
   min-height: 100%;
-  background: rgb(250,96,0);
-  background: linear-gradient(0deg, rgba(250,96,0,1) 0%, rgba(0,0,0,1) 15%);
+  background: rgb(81,24,69);
+  background: linear-gradient(0deg, rgba(81,24,69,1) 0%, rgba(144,12,63,1) 23%, rgba(199,0,57,1) 59%, rgba(255,87,51,1) 100%);
   background-attachment: fixed;
 }
 
