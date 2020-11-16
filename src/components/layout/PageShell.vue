@@ -1,6 +1,6 @@
 <template>
   <div class="page-shell">
-    <div class='loader'  v-if="isLoading"><SpinningRecord /></div>
+    <div class="loader" v-if="isLoading"><SpinningRecord /></div>
     <div class="wrapper">
       <header class="banner">
         <span class="letter w-hover">w</span>
@@ -10,17 +10,17 @@
         <span v-if="isLive" class="badge">live</span>
       </header>
       <main :class="isVisualizing && 'vis-height-offset'">
-        <router-view @setLoading="setLoading" @setLive="setLive" />
+        <router-view @set-loading="setLoading" @set-live="setLive" />
       </main>
     </div>
     <div class="footer">
-      <AudioControls @setVisualiztion="setVisualiztion" />
+      <AudioControls @set-visualiztion="setVisualiztion" />
     </div>
   </div>
 </template>
 <script>
-import AudioControls from "../AudioControls";
-import SpinningRecord  from '../SpinningRecord';
+import AudioControls from '../AudioControls';
+import SpinningRecord from '../SpinningRecord';
 
 export default {
   components: { AudioControls, SpinningRecord },
@@ -40,8 +40,8 @@ export default {
     },
     setLoading(isLoading) {
       this.isLoading = isLoading;
-    },
-  },
+    }
+  }
 };
 </script>
 <style lang="scss">
@@ -55,17 +55,17 @@ $viewport-height: calc(var(--vh, 1vh) * 100); // see public/scripts/set-vh.js
 
 .page-shell {
   .loader {
-  position: absolute;
-  // margin: auto;
-// vertical-align: middle;
-// display: block;
-  // left: 50%;
-  // top: 50%;
-  // position: absolute;
-top: 50%;/*position Y halfway in*/
-left: 50%;/*position X halfway in*/
-transform: translate(-50%,-50%)
-}
+    position: absolute;
+    // margin: auto;
+    // vertical-align: middle;
+    // display: block;
+    // left: 50%;
+    // top: 50%;
+    // position: absolute;
+    top: 50%; /*position Y halfway in*/
+    left: 50%; /*position X halfway in*/
+    transform: translate(-50%, -50%);
+  }
   main {
     height: calc(#{$viewport-height} - #{$footer-height});
     overflow-y: scroll;
@@ -116,7 +116,7 @@ transform: translate(-50%,-50%)
       height: $mobile-header-height;
     }
     .letter {
-      font-family: "Londrina Outline";
+      font-family: 'Londrina Outline';
       font-size: 5rem;
       text-align: center;
       text-transform: uppercase;
