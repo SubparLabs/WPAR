@@ -9,14 +9,10 @@
       <input v-model="displayName" id="name" type="text" />
       <p>How long do you want to spin?</p>
       <div :key="'radio=' + opt" v-for="opt in options">
-        <input v-bind:value="opt" v-bind:id="'btn-' + opt" type="radio" />
-        <label class="radio-label" v-bind:for="'btn-' + opt"
-          >{{ opt }} minutes</label
-        >
+        <input name="guest-dj-radio" v-bind:value="opt" v-bind:id="'btn-' + opt" type="radio" />
+        <label class="radio-label" v-bind:for="'btn-' + opt">{{ opt }} minutes</label>
       </div>
-      <Button :disabled="isSubmitted" v-bind:action="makeMeDJ"
-        >Sign me up!</Button
-      >
+      <Button :disabled="isSubmitted" v-bind:action="makeMeDJ">Sign me up!</Button>
     </div>
     <div v-if="isComplete">
       <p>You're all set...</p>
@@ -25,10 +21,10 @@
   </div>
 </template>
 <script>
-import Button from "./common/Button";
+import Button from './common/Button';
 
 export default {
-  name: "GuestDJ",
+  name: 'GuestDJ',
   components: { Button },
   data() {
     return {
@@ -36,9 +32,9 @@ export default {
       isSubmitted: false,
       isComplete: false,
       options: [10, 30, 60],
-      displayName: "",
-      username: "guest",
-      password: "",
+      displayName: '',
+      username: 'guest',
+      password: ''
     };
   },
   methods: {
@@ -47,8 +43,8 @@ export default {
     },
     makeMeDJ() {
       fetch(`/.netlify/functions/create-guest-dj?n=${this.displayName}`)
-        .then((response) => response.json())
-        .then((guestData) => {
+        .then(response => response.json())
+        .then(guestData => {
           this.password = guestData.password;
           this.isComplete = true;
           this.showInputs = false;
@@ -56,9 +52,11 @@ export default {
         .catch(console.error);
     },
     toBooth() {
-      window.open(`https://stream.subpar.fm/public/subpar/dj?n=${this.username}&p=${this.password}`);
-    },
-  },
+      window.open(
+        `https://stream.subpar.fm/public/subpar/dj?n=${this.username}&p=${this.password}`
+      );
+    }
+  }
 };
 </script>
 <style lang="scss">

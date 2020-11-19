@@ -2,6 +2,21 @@
   <div class="page-shell">
     <div class="loader" v-if="isLoading"><SpinningRecord /></div>
     <div class="wrapper">
+      <div class="settings-wrapper">
+        <button
+          @click="toggleSettings"
+          v-bind:class="{ rotated: isSettingsOpen }"
+          class="config-btn"
+        >
+          <SettingsIcon width="40" />
+        </button>
+        <Settings
+          v-if="isSettingsOpen"
+          :currentColorTheme="colorTheme"
+          @set-theme="setColorTheme"
+          @close-settings="toggleSettings"
+        />
+      </div>
       <header class="banner">
         <span class="letter w-hover">w</span>
         <span class="letter p-hover">p</span>
@@ -21,15 +36,31 @@
 <script>
 import AudioControls from '../AudioControls';
 import SpinningRecord from '../SpinningRecord';
+import Settings from '../Settings';
+import SettingsIcon from '../../templatizedImages/settings.vue';
+
+import { defaultTheme, localStorageKey } from '../../utils/colorThemes';
 
 export default {
-  components: { AudioControls, SpinningRecord },
+  components: { AudioControls, SpinningRecord, SettingsIcon, Settings },
+
   data() {
     return {
       isLive: false,
       isVisualizing: false,
-      isLoading: true
+      isSettingsOpen: false,
+      isLoading: true,
+      colorTheme: ''
     };
+  },
+  beforeMount() {
+    let theme = defaultTheme;
+
+    if (window.localStorage) {
+      theme = window.localStorage.getItem(localStorageKey);
+    }
+
+    this.setColorTheme(theme);
   },
   methods: {
     setLive(isLive) {
@@ -40,6 +71,16 @@ export default {
     },
     setLoading(isLoading) {
       this.isLoading = isLoading;
+    },
+    toggleSettings() {
+      this.isSettingsOpen = !this.isSettingsOpen;
+    },
+    setColorTheme(theme) {
+      if (window.localStorage) {
+        window.localStorage.setItem(localStorageKey, theme);
+      }
+      this.colorTheme = theme;
+      document.body.className = theme;
     }
   }
 };
@@ -49,6 +90,7 @@ $footer-height: 110px;
 $med-header-height: 195px;
 $mobile-header-height: 110px;
 $canvas-height: 100px;
+$config-button-height: 30px;
 
 $viewport-height: 100vh; // Fallback for browsers that do not support Custom Properties
 $viewport-height: calc(var(--vh, 1vh) * 100); // see public/scripts/set-vh.js
@@ -56,12 +98,6 @@ $viewport-height: calc(var(--vh, 1vh) * 100); // see public/scripts/set-vh.js
 .page-shell {
   .loader {
     position: absolute;
-    // margin: auto;
-    // vertical-align: middle;
-    // display: block;
-    // left: 50%;
-    // top: 50%;
-    // position: absolute;
     top: 50%; /*position Y halfway in*/
     left: 50%; /*position X halfway in*/
     transform: translate(-50%, -50%);
@@ -93,6 +129,43 @@ $viewport-height: calc(var(--vh, 1vh) * 100); // see public/scripts/set-vh.js
       }
     }
   }
+  .settings-wrapper {
+    position: absolute;
+    margin: 0.5rem 0 0 1rem;
+    z-index: 1;
+  }
+
+  .config-btn {
+    cursor: pointer;
+    border: none;
+    background: none;
+    transition: 0.2s transform ease;
+    transform-origin: 50% 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: rotate(360deg);
+
+    & > .settings-svg {
+      transition: fill 0.2s ease;
+    }
+    &:active {
+      transform: scale(1.05);
+    }
+
+    &.rotated {
+      transform: rotate(180deg);
+
+      & > .settings-svg {
+        fill: white;
+      }
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+
   .wrapper {
     display: flex;
     flex-direction: row;
@@ -102,11 +175,12 @@ $viewport-height: calc(var(--vh, 1vh) * 100); // see public/scripts/set-vh.js
     }
   }
   .banner {
-    margin-left: 1rem;
     display: inline-block;
     position: relative;
     color: white;
     text-align: center;
+    margin-top: calc(#{$config-button-height} + 10px);
+
     @media only screen and (max-width: 999px) {
       margin-left: 0;
       height: $med-header-height;
