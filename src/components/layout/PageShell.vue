@@ -8,20 +8,24 @@
           v-bind:class="{ rotated: isSettingsOpen }"
           class="config-btn"
         >
-          <SettingsIcon width="40" />
+          <!-- <SettingsIcon width="40" /> -->
         </button>
-        <Settings
+        <!-- <Settings
           v-if="isSettingsOpen"
           :currentColorTheme="colorTheme"
           @set-theme="setColorTheme"
           @close-settings="toggleSettings"
-        />
+        /> -->
       </div>
       <header class="banner">
-        <span class="letter w-hover">w</span>
-        <span class="letter p-hover">p</span>
-        <span class="letter a-hover">a</span>
-        <span class="letter r-hover">r</span>
+        <span
+          v-for="(letter, index) in ['w', 'p', 'a', 'r']"
+          v-bind:key="letter"
+          v-bind:class="{ letter: 1, [`letter-${availableColorThemes[index]}`]: 1 }"
+          @click="setColorTheme(availableColorThemes[index])"
+        >
+          {{ letter }}
+        </span>
         <span v-if="isLive" class="badge">live</span>
       </header>
       <main :class="isVisualizing && 'vis-height-offset'">
@@ -36,13 +40,11 @@
 <script>
 import AudioControls from '../AudioControls';
 import SpinningRecord from '../SpinningRecord';
-import Settings from '../Settings';
-import SettingsIcon from '../../templatizedImages/settings.vue';
 
-import { defaultTheme, localStorageKey } from '../../utils/colorThemes';
+import { colorThemes, defaultTheme, localStorageKey } from '../../utils/colorThemes';
 
 export default {
-  components: { AudioControls, SpinningRecord, SettingsIcon, Settings },
+  components: { AudioControls, SpinningRecord },
 
   data() {
     return {
@@ -52,6 +54,14 @@ export default {
       isLoading: true,
       colorTheme: ''
     };
+  },
+  computed: {
+    availableColorThemes: function () {
+      const allThemes = [...colorThemes];
+      allThemes.splice(colorThemes.indexOf(this.colorTheme), 1);
+
+      return allThemes;
+    }
   },
   beforeMount() {
     let theme = defaultTheme;
@@ -179,7 +189,7 @@ $viewport-height: calc(var(--vh, 1vh) * 100); // see public/scripts/set-vh.js
     position: relative;
     color: white;
     text-align: center;
-    margin-top: calc(#{$config-button-height} + 10px);
+    margin-left: 1rem;
 
     @media only screen and (max-width: 999px) {
       margin-left: 0;
@@ -194,12 +204,23 @@ $viewport-height: calc(var(--vh, 1vh) * 100); // see public/scripts/set-vh.js
       font-size: 5rem;
       text-align: center;
       text-transform: uppercase;
+      cursor: pointer;
       @media only screen and (min-width: 580px) {
         font-size: 8rem;
       }
       @media only screen and (min-width: 1000px) {
         display: block;
         font-size: 20vh;
+      }
+    }
+
+    @each $themeKey in map-keys($themes) {
+      @debug $themeKey;
+      .letter-#{$themeKey}:hover {
+        @include getTheme($themeKey);
+        background-clip: text;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
       }
     }
 

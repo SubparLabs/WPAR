@@ -1,0 +1,40 @@
+$themes: (
+  classic: (
+     background-color: rgb(250,96,0),
+    background: linear-gradient(180deg, rgba(250,96,0,1) 0%, rgba(250,142,0,1) 100%)
+  ),
+  grapefruit: (
+    background-color: rgb(81, 24, 69),
+      background: linear-gradient(
+      0deg,
+      rgba(81, 24, 69, 1) 0%,
+      rgba(144, 12, 63, 1) 23%,
+      rgba(199, 0, 57, 1) 59%,
+      rgba(255, 87, 51, 1) 100%
+    )
+  ),
+  noir: (
+    background: black
+  ),
+  corporate-pumpkin: (
+    background-color: rgb(250, 96, 0),
+     background: linear-gradient(0deg, rgba(250, 96, 0, 1) 0%, rgba(0, 0, 0, 1) 15%)
+  ),
+  frost: (
+     background-color: rgb(35, 119, 164),
+    background: linear-gradient(
+      180deg,
+      rgba(35, 119, 164, 1) 17%,
+      rgba(82, 164, 199, 1) 35%,
+      rgba(80, 163, 198, 1) 52%,
+      rgba(121, 192, 215, 1) 74%,
+      rgba(174, 216, 229, 1) 85%
+    )
+  ) 
+);
+
+@mixin getTheme($name) {
+    @each $attribute,$value in map-get($themes, $name) {
+      #{$attribute}: $value
+    }
+  }
