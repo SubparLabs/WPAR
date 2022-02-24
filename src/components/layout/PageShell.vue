@@ -276,11 +276,6 @@ $viewport-height: calc(var(--vh, 1vh) * 100); // see public/scripts/set-vh.js
       float: right;
       margin-top: auto;
     }
-
-    .footer-left {
-      display: none;
-      float: left;
-    }
   }
 }
 </style>

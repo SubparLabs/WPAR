@@ -37,6 +37,9 @@
         <span class="show-time">{{ show.start | moment('calendar') }}</span>
       </p>
     </div>
+    <div class="about">
+      <router-link to="/about">about</router-link>
+    </div>
   </div>
 </template>
 
@@ -217,6 +220,21 @@ export default {
     .show-time {
       text-transform: lowercase;
     }
+  }
+}
+.about {
+  font-size: 0.7em;
+  position: fixed;
+  right: 0;
+  top: 0;
+
+  a {
+    text-decoration: none;
+    color: white;
+  }
+
+  a:hover {
+    color: #0d2c54;
   }
 }
 </style>
