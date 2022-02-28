@@ -28,9 +28,6 @@
         </span>
         <span v-if="isLive">
           <div class="badge">live</div>
-          <a style="text-decoration: none; color: white; margin-top: 0.5rem" href="tel:+18028517337"
-            >(802) 851-7337</a
-          >
         </span>
       </header>
       <main :class="isVisualizing && 'vis-height-offset'">
@@ -270,11 +267,6 @@ $viewport-height: calc(var(--vh, 1vh) * 100); // see public/scripts/set-vh.js
 
     a:hover {
       color: #0d2c54;
-    }
-
-    .footer-right {
-      float: right;
-      margin-top: auto;
     }
   }
 }
