@@ -1,7 +1,7 @@
 <template>
   <div class="guest-dj-wrapper">
     <div v-if="!showInputs && !isComplete">
-      <p>Looks like no one's on air...</p>
+      <!-- <p>Looks like no one's on air...</p> -->
       <Button v-bind:action="showForm">Guest DJ</Button>
     </div>
     <div v-if="showInputs">

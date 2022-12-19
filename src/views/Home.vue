@@ -8,7 +8,10 @@
           <span v-if="playing.artist && playing.title"> | </span>
           <span class="title">{{ playing.title }}</span>
         </p>
-        <Guest-DJ v-else />
+        <p v-else>
+          <span class="artist">WXYC</span>
+          <Guest-DJ />
+        </p>
       </div>
       <div class="history">
         <span class="header">earlier</span>
@@ -26,16 +29,16 @@
         </p>
       </div>
     </div>
-    <div class="schedule">
-      <span class="header">upcoming shows</span>
-      <p v-if="live" class="individual-show">
-        <span class="show-name">{{ streamer }}</span> – <span class="show-time">NOW</span>
+    <div v-if="live" class="schedule">
+      <span class="header">Your DJ</span>
+      <p class="individual-show">
+        <span class="show-name">{{ streamer }}</span>
+        <!-- – <span class="show-time">NOW</span> -->
       </p>
-
-      <p v-for="show in filteredSchedule" class="individual-show" v-bind:key="show.name">
+      <!-- <p v-else in filteredSchedule" class="individual-show" v-bind:key="show.name">
         <span class="show-name">{{ show.name }}</span> –
         <span class="show-time">{{ show.start | moment('calendar') }}</span>
-      </p>
+      </p> -->
     </div>
     <div class="about">
       <router-link to="/about">about</router-link>
@@ -48,7 +51,7 @@ import GuestDJ from '../components/GuestDJ';
 import uniqBy from 'lodash.uniqby';
 import NchanSubscriber from 'nchan';
 
-const junkArtistValues = ['(null)', '', 'subpar.fm'];
+const junkArtistValues = ['(null)', '', 'subpar.fm', 'AzuraCast.com'];
 
 export default {
   name: 'Home',
@@ -88,7 +91,7 @@ export default {
   },
   methods: {
     setStatus(station) {
-      this.live = station.live.is_live || (station.now_playing && !station.now_playing.playlist);
+      this.live = station.live.is_live;
       this.$emit('set-live', this.live);
 
       if (this.live) {
