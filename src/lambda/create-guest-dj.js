@@ -1,7 +1,7 @@
 /* global require, process, exports */
 
 const axios = require('axios');
-const updateGuestUrl = 'https://stream.subpar.fm/api/station/1/streamer/24';
+const updateGuestUrl = 'https://stream.subpar.fm/api/station/1/streamer/3';
 
 const chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 
